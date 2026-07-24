@@ -76,6 +76,12 @@ body {
   animation: gridMove 20s linear infinite;
 }
 
+@media (max-width: 768px) {
+  .bg-grid {
+    animation: none;
+  }
+}
+
 /* ==================== FLOATING PARTICLES ==================== */
 @keyframes particle1 {
   0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
@@ -141,6 +147,12 @@ body {
   background: rgba(236, 72, 153, 0.4);
   animation: particle3 7s ease-in-out infinite 2.5s;
   box-shadow: 0 0 8px rgba(236, 72, 153, 0.3);
+}
+
+@media (max-width: 768px) {
+  .particle {
+    animation: none !important;
+  }
 }
 
 /* ==================== FLOATING SHOE ==================== */
@@ -279,6 +291,13 @@ body {
   animation-play-state: paused;
 }
 
+@media (max-width: 768px) {
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation-play-state: paused;
+  }
+}
+
 /* ==================== FADE-IN UTILITY ==================== */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
@@ -376,4 +395,9 @@ nav button:hover::after {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* ==================== SMOOTH TRANSITIONS ==================== */
+.duration-800 {
+  transition-duration: 800ms;
 }

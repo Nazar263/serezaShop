@@ -6,6 +6,17 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const TELEGRAM_URL = "https://t.me/serezha9k";
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
+
 const products = [
   {
     id: 1,
@@ -188,9 +199,16 @@ function Header() {
   }, []);
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) element.scrollIntoView({ behavior: "smooth" });
     setIsMobileMenuOpen(false);
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        const headerOffset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - headerOffset;
+        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+      }
+    }, 350);
   };
 
   return (
@@ -306,12 +324,13 @@ function Header() {
 function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (!isAutoPlaying) return;
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % products.length);
-    }, 4000);
+    }, 7000);
     return () => clearInterval(timer);
   }, [isAutoPlaying]);
 
@@ -335,17 +354,17 @@ function Hero() {
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-purple-900/20 via-[#0a0a0f]/80 to-[#0a0a0f]" />
         <motion.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.12, 0.22, 0.12], x: [0, 25, 0], y: [0, -15, 0] }}
+          animate={isMobile ? {} : { scale: [1, 1.2, 1], opacity: [0.12, 0.22, 0.12], x: [0, 25, 0], y: [0, -15, 0] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-purple-500/20 rounded-full blur-[180px]"
         />
         <motion.div
-          animate={{ scale: [1, 1.15, 1], opacity: [0.08, 0.18, 0.08], x: [0, -30, 0], y: [0, 20, 0] }}
+          animate={isMobile ? {} : { scale: [1, 1.15, 1], opacity: [0.08, 0.18, 0.08], x: [0, -30, 0], y: [0, 20, 0] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
           className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-pink-500/15 rounded-full blur-[150px]"
         />
         <motion.div
-          animate={{ scale: [0.85, 1.1, 0.85], opacity: [0.04, 0.1, 0.04] }}
+          animate={isMobile ? {} : { scale: [0.85, 1.1, 0.85], opacity: [0.04, 0.1, 0.04] }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
           className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-gradient-to-br from-purple-600/15 via-pink-600/10 to-indigo-600/15 rounded-full blur-[200px]"
         />
@@ -354,7 +373,7 @@ function Hero() {
       {/* Animated diagonal lines */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.03]">
         <motion.div
-          animate={{ x: ["-100%", "100%"] }}
+          animate={isMobile ? {} : { x: ["-100%", "100%"] }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           className="absolute top-0 left-0 w-full h-full"
           style={{
@@ -362,7 +381,7 @@ function Hero() {
           }}
         />
         <motion.div
-          animate={{ x: ["100%", "-100%"] }}
+          animate={isMobile ? {} : { x: ["100%", "-100%"] }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
           className="absolute top-0 left-0 w-full h-full"
           style={{
@@ -490,8 +509,8 @@ function Hero() {
                 {products.map((product, index) => (
                   <div
                     key={product.id}
-                    className="absolute inset-0 transition-opacity duration-500 ease-in-out"
-                    style={{ opacity: index === activeIndex ? 1 : 0 }}
+                    className="absolute inset-0 transition-all duration-800 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                    style={{ opacity: index === activeIndex ? 1 : 0, transform: `scale(${index === activeIndex ? 1 : 0.95})` }}
                   >
                     <Image
                       src={product.image}
@@ -524,7 +543,7 @@ function Hero() {
                   return (
                     <motion.button
                       key={product.id}
-                      whileHover={{ scale: isActive ? 1.1 : 1.08 }}
+                      whileHover={{ scale: isActive ? 1.12 : 1.1 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handleThumbnailClick(index)}
                       animate={{
@@ -532,10 +551,10 @@ function Hero() {
                         opacity: isActive ? 1 : 0.5,
                         borderColor: isActive ? "rgba(168, 85, 247, 1)" : "rgba(255, 255, 255, 0.15)",
                         boxShadow: isActive
-                          ? "0 0 18px rgba(168,85,247,0.45)"
+                          ? "0 0 20px rgba(168,85,247,0.5)"
                           : "0 0 0px rgba(168,85,247,0)",
                       }}
-                      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
                       className={`relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden border-2 shrink-0 ${
                         isActive
                           ? "bg-gradient-to-br from-purple-500/15 to-pink-500/10"
@@ -554,10 +573,10 @@ function Hero() {
               <AnimatePresence mode="popLayout">
                 <motion.div
                   key={activeIndex}
-                  initial={{ opacity: 0, y: 8 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                   className="absolute inset-0 flex items-center justify-center"
                 >
                   <span className="text-base sm:text-lg text-gray-400">{activeProduct.brand}</span>
@@ -577,7 +596,7 @@ function Hero() {
                       width: isActive ? 32 : 8,
                       opacity: isActive ? 1 : 0.3,
                     }}
-                    transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
                     className="h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"
                   />
                 );
