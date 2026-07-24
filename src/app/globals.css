@@ -291,13 +291,6 @@ body {
   animation-play-state: paused;
 }
 
-@media (max-width: 768px) {
-  .animate-marquee,
-  .animate-marquee-reverse {
-    animation-play-state: paused;
-  }
-}
-
 /* ==================== FADE-IN UTILITY ==================== */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
