@@ -144,7 +144,7 @@ const fadeUp = {
   visible: (i: number = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.7, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] as const },
   }),
 };
 
@@ -161,7 +161,7 @@ const scaleIn = {
   visible: (i: number = 0) => ({
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.5, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.5, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] as const },
   }),
 };
 
@@ -387,7 +387,7 @@ function Hero() {
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] as const }}
             className="text-left lg:text-left order-2 lg:order-1 lg:pt-24"
           >
             <motion.h1
@@ -452,7 +452,7 @@ function Hero() {
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] as const }}
             className="order-1 lg:order-2 -mt-10 lg:-mt-32"
           >
             {/* Shoe container */}
@@ -500,7 +500,7 @@ function Hero() {
                   initial={{ opacity: 0, scale: 0.7, y: 40, rotateY: -20 }}
                   animate={{ opacity: 1, scale: 1, y: 0, rotateY: 0 }}
                   exit={{ opacity: 0, scale: 0.7, y: -40, rotateY: 20 }}
-                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
                   className="relative shoe-float"
                   style={{ perspective: "1000px" }}
                 >
@@ -687,7 +687,7 @@ function About() {
             initial={{ opacity: 0, x: -40, filter: "blur(8px)" }}
             whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] as const }}
           >
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
@@ -724,7 +724,7 @@ function About() {
                   transition={{
                     duration: 0.5,
                     delay: 0.2 + i * 0.12,
-                    ease: [0.25, 0.46, 0.45, 0.94],
+                    ease: [0.25, 0.46, 0.45, 0.94] as const,
                   }}
                   whileHover={{ x: 6, transition: { duration: 0.2 } }}
                   className="flex items-start gap-3 group cursor-default"
@@ -756,7 +756,7 @@ function About() {
                 transition={{
                   duration: 0.6,
                   delay: i * 0.15,
-                  ease: [0.25, 0.46, 0.45, 0.94],
+                  ease: [0.25, 0.46, 0.45, 0.94] as const,
                 }}
                 whileHover={{
                   y: -8,
@@ -874,7 +874,7 @@ function Delivery() {
           initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] as const }}
           className="text-center mb-12"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
@@ -906,7 +906,7 @@ function Delivery() {
               transition={{
                 duration: 0.6,
                 delay: i * 0.18,
-                ease: [0.25, 0.46, 0.45, 0.94],
+                ease: [0.25, 0.46, 0.45, 0.94] as const,
               }}
               whileHover={{
                 y: -12,
@@ -1026,7 +1026,7 @@ function FAQ() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] as const }}
                   >
                     <div className="px-5 pb-5 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4">
                       {item.answer}
