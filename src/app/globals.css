@@ -11,6 +11,10 @@
   --color-accent-glow: rgba(168, 85, 247, 0.3);
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 * {
   scroll-behavior: smooth;
 }
@@ -18,6 +22,7 @@
 body {
   background: #0a0a0f;
   color: #ffffff;
+  overflow-x: hidden;
 }
 
 /* ==================== GLOW BUTTON ==================== */
@@ -140,13 +145,17 @@ body {
 
 /* ==================== FLOATING SHOE ==================== */
 @keyframes shoeFloat {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  25% { transform: translateY(-8px) rotate(0.5deg); }
-  75% { transform: translateY(5px) rotate(-0.5deg); }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
 }
 
 .shoe-float {
-  animation: shoeFloat 6s ease-in-out infinite;
+  animation: shoeFloat 4s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.shoe-float.idle {
+  animation-play-state: running;
 }
 
 /* ==================== PREMIUM CARD HOVER ==================== */

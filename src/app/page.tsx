@@ -327,26 +327,26 @@ function Hero() {
   const activeProduct = products[activeIndex];
 
   return (
-    <section className="relative min-h-[calc(100vh-4rem)] flex items-center overflow-x-hidden py-6 lg:py-10">
+    <section className="relative min-h-[calc(100vh-4rem)] flex items-center overflow-hidden py-6 lg:py-10">
       {/* Animated grid background */}
-      <div className="absolute inset-0 bg-grid opacity-40" />
+      <div className="absolute inset-0 bg-grid opacity-40 overflow-hidden" />
 
       {/* Background gradients - animated */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-purple-900/20 via-[#0a0a0f]/80 to-[#0a0a0f]" />
         <motion.div
-          animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.3, 0.15], x: [0, 30, 0], y: [0, -20, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-purple-500/25 rounded-full blur-[180px]"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.12, 0.22, 0.12], x: [0, 25, 0], y: [0, -15, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-purple-500/20 rounded-full blur-[180px]"
         />
         <motion.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.25, 0.1], x: [0, -40, 0], y: [0, 30, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-pink-500/20 rounded-full blur-[150px]"
+          animate={{ scale: [1, 1.15, 1], opacity: [0.08, 0.18, 0.08], x: [0, -30, 0], y: [0, 20, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+          className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-pink-500/15 rounded-full blur-[150px]"
         />
         <motion.div
-          animate={{ scale: [0.8, 1.15, 0.8], opacity: [0.05, 0.15, 0.05], rotate: [0, 180, 360] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          animate={{ scale: [0.85, 1.1, 0.85], opacity: [0.04, 0.1, 0.04] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
           className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-gradient-to-br from-purple-600/15 via-pink-600/10 to-indigo-600/15 rounded-full blur-[200px]"
         />
       </div>
@@ -481,96 +481,107 @@ function Hero() {
 
               {/* Glow background */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <motion.div
-                  animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.35, 0.2] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-3/4 h-3/4 bg-purple-500/30 rounded-full blur-[80px]"
-                />
-                <motion.div
-                  animate={{ scale: [1.1, 1, 1.1], opacity: [0.1, 0.2, 0.1] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                  className="absolute w-2/3 h-2/3 bg-pink-500/15 rounded-full blur-[60px]"
-                />
+                <div className="w-3/4 h-3/4 bg-purple-500/20 rounded-full blur-[80px]" />
+                <div className="absolute w-2/3 h-2/3 bg-pink-500/10 rounded-full blur-[60px]" />
               </div>
 
-              {/* Shoe image */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeIndex}
-                  initial={{ opacity: 0, scale: 0.7, y: 40, rotateY: -20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0, rotateY: 0 }}
-                  exit={{ opacity: 0, scale: 0.7, y: -40, rotateY: 20 }}
-                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
-                  className="relative shoe-float"
-                  style={{ perspective: "1000px" }}
-                >
-                  <Image
-                    src={activeProduct.image}
-                    alt={activeProduct.name}
-                    width={800}
-                    height={800}
-                    className="w-full h-auto drop-shadow-[0_0_60px_rgba(168,85,247,0.5)]"
-                    priority
-                  />
-                </motion.div>
-              </AnimatePresence>
+              {/* Shoe image — crossfade via opacity */}
+              <div className="relative w-full">
+                {products.map((product, index) => (
+                  <div
+                    key={product.id}
+                    className="absolute inset-0 transition-opacity duration-500 ease-in-out"
+                    style={{ opacity: index === activeIndex ? 1 : 0 }}
+                  >
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      width={800}
+                      height={800}
+                      className="w-full h-auto"
+                      priority={index === activeIndex}
+                    />
+                  </div>
+                ))}
+                {/* Spacer to maintain container height */}
+                <Image
+                  src={products[0].image}
+                  alt={products[0].name}
+                  width={800}
+                  height={800}
+                  className="w-full h-auto invisible"
+                />
+              </div>
 
               {/* Product badge removed - now shown below thumbnails */}
             </div>
 
             {/* Thumbnails - Mini Catalog */}
-            <div className="-mt-16 sm:-mt-28 md:-mt-36">
+            <div className="-mt-16 sm:-mt-28 md:-mt-63">
               <div className="flex justify-center items-center gap-2 sm:gap-3">
-                {products.map((product, index) => (
-                  <motion.button
-                    key={product.id}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => handleThumbnailClick(index)}
-                    className={`relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden border-2 transition-all duration-300 shrink-0 ${
-                      index === activeIndex
-                        ? "border-purple-500 shadow-[0_0_25px_rgba(168,85,247,0.6)] scale-110 bg-gradient-to-br from-purple-500/20 to-pink-500/10"
-                        : "border-white/15 hover:border-white/30 opacity-55 hover:opacity-100 bg-white/[0.03]"
-                    }`}
-                  >
-                    <Image src={product.image} alt={product.name} fill className="object-contain p-2" />
-                    {index === activeIndex && (
-                      <motion.div
-                        layoutId="activeThumb"
-                        className="absolute inset-0 border-2 border-purple-500 rounded-2xl"
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
-                      />
-                    )}
-                  </motion.button>
-                ))}
+                {products.map((product, index) => {
+                  const isActive = index === activeIndex;
+                  return (
+                    <motion.button
+                      key={product.id}
+                      whileHover={{ scale: isActive ? 1.1 : 1.08 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => handleThumbnailClick(index)}
+                      animate={{
+                        scale: isActive ? 1.1 : 1,
+                        opacity: isActive ? 1 : 0.5,
+                        borderColor: isActive ? "rgba(168, 85, 247, 1)" : "rgba(255, 255, 255, 0.15)",
+                        boxShadow: isActive
+                          ? "0 0 18px rgba(168,85,247,0.45)"
+                          : "0 0 0px rgba(168,85,247,0)",
+                      }}
+                      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      className={`relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden border-2 shrink-0 ${
+                        isActive
+                          ? "bg-gradient-to-br from-purple-500/15 to-pink-500/10"
+                          : "bg-white/[0.03]"
+                      }`}
+                    >
+                      <Image src={product.image} alt={product.name} fill className="object-contain p-2" />
+                    </motion.button>
+                  );
+                })}
               </div>
             </div>
 
             {/* Product Name - Centered under thumbnails */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIndex}
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                transition={{ duration: 0.4 }}
-                className="text-center mt-2"
-              >
-                <span className="text-base sm:text-lg text-gray-400">{activeProduct.brand}</span>
-                <span className="text-base sm:text-lg text-white ml-2 font-semibold">{activeProduct.name}</span>
-              </motion.div>
-            </AnimatePresence>
+            <div className="relative h-8 mt-2">
+              <AnimatePresence mode="popLayout">
+                <motion.div
+                  key={activeIndex}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  className="absolute inset-0 flex items-center justify-center"
+                >
+                  <span className="text-base sm:text-lg text-gray-400">{activeProduct.brand}</span>
+                  <span className="text-base sm:text-lg text-white ml-2 font-semibold">{activeProduct.name}</span>
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
             {/* Auto-play indicator */}
             <div className="flex justify-center mt-3 gap-2">
-              {products.map((_, index) => (
-                <div
-                  key={index}
-                  className={`h-1.5 rounded-full transition-all duration-500 ${
-                    index === activeIndex ? "w-8 bg-gradient-to-r from-purple-500 to-pink-500" : "w-2 bg-white/20"
-                  }`}
-                />
-              ))}
+              {products.map((_, index) => {
+                const isActive = index === activeIndex;
+                return (
+                  <motion.div
+                    key={index}
+                    animate={{
+                      width: isActive ? 32 : 8,
+                      opacity: isActive ? 1 : 0.3,
+                    }}
+                    transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    className="h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"
+                  />
+                );
+              })}
             </div>
           </motion.div>
         </div>
@@ -1089,7 +1100,17 @@ function Footer() {
             <p className="text-sm text-gray-500">
               &copy; {new Date().getFullYear()} Serezha Shop. Всі права захищені.
             </p>
-            <p className="text-sm text-gray-500">Оригінальні кросівки з США</p>
+            <p className="text-sm text-gray-500">
+              Зроблено{" "}
+              <a
+                href="https://freelance-ua.agency"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-400 hover:text-purple-300 transition-colors"
+              >
+                Freelance UA || Digital Agency
+              </a>
+            </p>
           </motion.div>
         </motion.div>
       </div>
@@ -1099,7 +1120,7 @@ function Footer() {
 
 export default function Home() {
   return (
-    <main className="relative">
+    <main className="relative overflow-hidden">
       <Header />
       <Hero />
       <Catalog />
