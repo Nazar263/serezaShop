@@ -407,7 +407,7 @@ function Hero() {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] as const }}
-            className="text-left lg:text-left order-2 lg:order-1 lg:pt-24"
+            className="text-center order-2 lg:order-1 lg:text-left lg:pt-24 bg-white/[0.08] backdrop-blur-2xl rounded-3xl p-6 sm:p-8 border border-white/[0.12] shadow-lg shadow-purple-500/10 lg:bg-transparent lg:backdrop-blur-none lg:rounded-none lg:p-0 lg:border-0 lg:shadow-none"
           >
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -457,7 +457,7 @@ function Hero() {
                 href={TELEGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glow-btn inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:px-8 sm:py-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-base sm:text-lg font-semibold text-white shadow-lg shadow-purple-500/30"
+                className="glow-btn inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:px-8 sm:py-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-base sm:text-lg font-semibold text-white shadow-lg shadow-purple-500/30 mx-auto"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
